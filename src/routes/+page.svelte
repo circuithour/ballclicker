@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { onMount } from 'svelte';
 
     onMount(() => {
         loadGame();
@@ -42,14 +42,14 @@
             tph: tph,
             ta: ta,
         };
-        localStorage.setItem("gameData", JSON.stringify(gameData));
+        localStorage.setItem('gameData', JSON.stringify(gameData));
         setTimeout(() => {
             saveText = false;
         }, 3000);
     }
 
     function loadGame() {
-        const storedData = localStorage.getItem("gameData");
+        const storedData = localStorage.getItem('gameData');
         if (storedData) {
             const gameData = JSON.parse(storedData);
             clickRate = gameData.clickRate;
@@ -66,7 +66,7 @@
     }
 
     function destroyGame() {
-        localStorage.removeItem("gameData");
+        localStorage.removeItem('gameData');
         rate = 0;
         clickRate = 1;
         count = 0;
@@ -106,6 +106,16 @@
     }
 </script>
 
+<svelte:head>
+    <title>Ball Clicker</title>
+    <meta name="title" content="Ball Clicker" />
+    <meta name="description" content="Click the balls as fast as you can" />
+    <meta name="keywords" content="balls, clicker, idle, game" />
+    <meta name="robots" content="index, nofollow" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="language" content="English" />
+</svelte:head>
+
 <div class="container">
     <div class="shop">
         <div
@@ -120,7 +130,7 @@
         >
             <p>Automatic Ball Toucher</p>
             <span>
-                <p class={count < 50 ? "unaffordable" : "affordable"}>
+                <p class={count < 50 ? 'unaffordable' : 'affordable'}>
                     50 Balls
                 </p>
                 <p>x{abt}</p>
@@ -138,7 +148,7 @@
         >
             <p>Enhanced Automatic Ball Toucher</p>
             <span>
-                <p class={count < 300 ? "unaffordable" : "affordable"}>
+                <p class={count < 300 ? 'unaffordable' : 'affordable'}>
                     300 Balls
                 </p>
                 <p>x{eabt}</p>
@@ -156,7 +166,7 @@
         >
             <p>Ball Touching Employee</p>
             <span>
-                <p class={count < 500 ? "unaffordable" : "affordable"}>
+                <p class={count < 500 ? 'unaffordable' : 'affordable'}>
                     500 Balls
                 </p>
                 <p>x{bte}</p>
@@ -174,7 +184,7 @@
         >
             <p>Ball Touching Goblin</p>
             <span>
-                <p class={count < 1000 ? "unaffordable" : "affordable"}>
+                <p class={count < 1000 ? 'unaffordable' : 'affordable'}>
                     1000 Balls
                 </p>
                 <p>x{btg}</p>
@@ -192,7 +202,7 @@
         >
             <p>Counterfeit Ball Printer</p>
             <span>
-                <p class={count < 10000 ? "unaffordable" : "affordable"}>
+                <p class={count < 10000 ? 'unaffordable' : 'affordable'}>
                     10000 Balls
                 </p>
                 <p>x{cbp}</p>
@@ -231,10 +241,10 @@
                 ph = result.upgrade;
                 count = result.count;
             }}
-            class={ph ? "die" : "shopitemalt"}
+            class={ph ? 'die' : 'shopitemalt'}
         >
             <span>
-                <p class={count < 250 && !ph ? "unaffordable" : "affordable"}>
+                <p class={count < 250 && !ph ? 'unaffordable' : 'affordable'}>
                     250 Balls
                 </p>
                 {#if ph}
@@ -253,10 +263,10 @@
                 tph = result.upgrade;
                 count = result.count;
             }}
-            class={tph ? "die" : "shopitemalt"}
+            class={tph ? 'die' : 'shopitemalt'}
         >
             <span>
-                <p class={count < 1000 && !tph ? "unaffordable" : "affordable"}>
+                <p class={count < 1000 && !tph ? 'unaffordable' : 'affordable'}>
                     1000 Balls
                 </p>
                 {#if tph}
@@ -275,10 +285,10 @@
                 ta = result.upgrade;
                 count = result.count;
             }}
-            class={ta ? "die" : "shopitemalt"}
+            class={ta ? 'die' : 'shopitemalt'}
         >
             <span>
-                <p class={count < 5000 && !ta ? "unaffordable" : "affordable"}>
+                <p class={count < 5000 && !ta ? 'unaffordable' : 'affordable'}>
                     5000 Balls
                 </p>
                 {#if ta}
@@ -293,8 +303,8 @@
 </div>
 
 <style>
-    @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Black+Ops+One&family=Gabarito&family=Oxygen&family=Poppins&family=Prompt&family=Roboto:wght@900&display=swap");
-    @import url("https://fonts.googleapis.com/css2?family=Fragment+Mono&display=swap");
+    @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Black+Ops+One&family=Gabarito&family=Oxygen&family=Poppins&family=Prompt&family=Roboto:wght@900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Fragment+Mono&display=swap');
 
     * {
         font-size: 1.2rem;
@@ -394,7 +404,7 @@
     }
 
     .info {
-        font-family: "Fragment Mono", monospace;
+        font-family: 'Fragment Mono', monospace;
     }
 
     .counters {
@@ -471,7 +481,7 @@
         border-radius: 5px;
         background-color: transparent;
         color: white;
-        font-family: "Fragment Mono", monospace;
+        font-family: 'Fragment Mono', monospace;
         border-top: none;
         border-right: solid 3px #ffffff10;
         border-left: solid 3px #ffffff10;
