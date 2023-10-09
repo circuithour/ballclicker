@@ -611,7 +611,7 @@
 
         .information,
         .footer {
-            margin: 1rem 0rem;
+            padding: 1rem 0rem;
         }
 
         .information {
@@ -664,6 +664,10 @@
 
         #savetext {
             transform: translateY(-5rem);
+        }
+
+        #button {
+            touch-action: manipulation;
         }
     }
 </style>
