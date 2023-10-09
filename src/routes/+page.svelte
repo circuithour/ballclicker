@@ -588,7 +588,7 @@
             position: absolute;
             background-color: #000;
             z-index: 3;
-            top: 100px;
+            top: 116px;
             bottom: 100px;
             overflow-y: auto;
             max-height: 80vh;
@@ -599,7 +599,7 @@
             position: absolute;
             background-color: #000;
             z-index: 3;
-            top: 100px;
+            top: 116px;
             bottom: 100px;
             overflow-y: auto;
             max-height: 80vh;
@@ -611,7 +611,6 @@
 
         .information,
         .footer {
-            padding: 1rem 0rem;
         }
 
         .information {
