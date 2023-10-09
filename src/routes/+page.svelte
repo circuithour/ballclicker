@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from 'svelte';
+    import { onMount } from "svelte";
 
     onMount(() => {
         loadGame();
@@ -25,31 +25,33 @@
     let ph = false;
     let tph = false;
     let ta = false;
+    let gadgetDrawer = false;
+    let upgradeDrawer = false;
 
     $: rate = abt * 8 + eabt * 15 + bte * 20 + btg * 50 + cbp * 100;
 
     function saveGame() {
         saveText = true;
         const gameData = {
-            clickRate: clickRate,
-            count: count,
-            abt: abt,
-            eabt: eabt,
-            bte: bte,
-            btg: btg,
-            cbp: cbp,
-            ph: ph,
-            tph: tph,
-            ta: ta,
+            clickRate,
+            count,
+            abt,
+            eabt,
+            bte,
+            btg,
+            cbp,
+            ph,
+            tph,
+            ta,
         };
-        localStorage.setItem('gameData', JSON.stringify(gameData));
+        localStorage.setItem("gameData", JSON.stringify(gameData));
         setTimeout(() => {
             saveText = false;
         }, 3000);
     }
 
     function loadGame() {
-        const storedData = localStorage.getItem('gameData');
+        const storedData = localStorage.getItem("gameData");
         if (storedData) {
             const gameData = JSON.parse(storedData);
             clickRate = gameData.clickRate;
@@ -66,7 +68,7 @@
     }
 
     function destroyGame() {
-        localStorage.removeItem('gameData');
+        localStorage.removeItem("gameData");
         rate = 0;
         clickRate = 1;
         count = 0;
@@ -78,6 +80,31 @@
         ph = false;
         tph = false;
         ta = false;
+    }
+
+    let isMobileView = false;
+
+    function checkMobileView() {
+        isMobileView = window.innerWidth <= 768;
+    }
+
+    if (typeof window !== "undefined") {
+        checkMobileView(); // Initial check
+        window.addEventListener("resize", checkMobileView);
+    }
+
+    function toggleGDrawer() {
+        gadgetDrawer = !gadgetDrawer;
+        if (upgradeDrawer === true) {
+            upgradeDrawer = !upgradeDrawer;
+        }
+    }
+
+    function toggleUDrawer() {
+        upgradeDrawer = !upgradeDrawer;
+        if (gadgetDrawer === true) {
+            gadgetDrawer = !gadgetDrawer;
+        }
     }
 
     function addBall() {
@@ -117,7 +144,13 @@
 </svelte:head>
 
 <div class="container">
-    <div class="shop">
+    <div
+        class="shop {isMobileView
+            ? gadgetDrawer
+                ? 'slide-in'
+                : 'slide-out'
+            : ''}"
+    >
         <div
             class="shopitem"
             role="button"
@@ -130,7 +163,7 @@
         >
             <p>Automatic Ball Toucher</p>
             <span>
-                <p class={count < 50 ? 'unaffordable' : 'affordable'}>
+                <p class={count < 50 ? "unaffordable" : "affordable"}>
                     50 Balls
                 </p>
                 <p>x{abt}</p>
@@ -148,7 +181,7 @@
         >
             <p>Enhanced Automatic Ball Toucher</p>
             <span>
-                <p class={count < 300 ? 'unaffordable' : 'affordable'}>
+                <p class={count < 300 ? "unaffordable" : "affordable"}>
                     300 Balls
                 </p>
                 <p>x{eabt}</p>
@@ -166,7 +199,7 @@
         >
             <p>Ball Touching Employee</p>
             <span>
-                <p class={count < 500 ? 'unaffordable' : 'affordable'}>
+                <p class={count < 500 ? "unaffordable" : "affordable"}>
                     500 Balls
                 </p>
                 <p>x{bte}</p>
@@ -184,7 +217,7 @@
         >
             <p>Ball Touching Goblin</p>
             <span>
-                <p class={count < 1000 ? 'unaffordable' : 'affordable'}>
+                <p class={count < 1000 ? "unaffordable" : "affordable"}>
                     1000 Balls
                 </p>
                 <p>x{btg}</p>
@@ -202,7 +235,7 @@
         >
             <p>Counterfeit Ball Printer</p>
             <span>
-                <p class={count < 10000 ? 'unaffordable' : 'affordable'}>
+                <p class={count < 10000 ? "unaffordable" : "affordable"}>
                     10000 Balls
                 </p>
                 <p>x{cbp}</p>
@@ -225,14 +258,23 @@
         </div>
         <div id="button" role="button" tabindex="" on:click={addBall} />
         <div class="footer">
+            <button on:click={toggleGDrawer} id="gadgetbutton">Gadgets</button>
             <button on:click={saveGame}>Save</button>
             {#if saveText}
                 <p id="savetext">Game has been saved.</p>
             {/if}
             <button on:click={destroyGame}>Reset</button>
+            <button on:click={toggleUDrawer} id="upgradebutton">Upgrades</button
+            >
         </div>
     </div>
-    <div class="shop2">
+    <div
+        class="shop2 {isMobileView
+            ? upgradeDrawer
+                ? 'slide-in-r'
+                : 'slide-out-r'
+            : ''}"
+    >
         <div
             role="button"
             tabindex=""
@@ -241,10 +283,10 @@
                 ph = result.upgrade;
                 count = result.count;
             }}
-            class={ph ? 'die' : 'shopitemalt'}
+            class={ph ? "die" : "shopitemalt"}
         >
             <span>
-                <p class={count < 250 && !ph ? 'unaffordable' : 'affordable'}>
+                <p class={count < 250 && !ph ? "unaffordable" : "affordable"}>
                     250 Balls
                 </p>
                 {#if ph}
@@ -263,10 +305,10 @@
                 tph = result.upgrade;
                 count = result.count;
             }}
-            class={tph ? 'die' : 'shopitemalt'}
+            class={tph ? "die" : "shopitemalt"}
         >
             <span>
-                <p class={count < 1000 && !tph ? 'unaffordable' : 'affordable'}>
+                <p class={count < 1000 && !tph ? "unaffordable" : "affordable"}>
                     1000 Balls
                 </p>
                 {#if tph}
@@ -285,10 +327,10 @@
                 ta = result.upgrade;
                 count = result.count;
             }}
-            class={ta ? 'die' : 'shopitemalt'}
+            class={ta ? "die" : "shopitemalt"}
         >
             <span>
-                <p class={count < 5000 && !ta ? 'unaffordable' : 'affordable'}>
+                <p class={count < 5000 && !ta ? "unaffordable" : "affordable"}>
                     5000 Balls
                 </p>
                 {#if ta}
@@ -303,8 +345,8 @@
 </div>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Black+Ops+One&family=Gabarito&family=Oxygen&family=Poppins&family=Prompt&family=Roboto:wght@900&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Fragment+Mono&display=swap');
+    @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Black+Ops+One&family=Gabarito&family=Oxygen&family=Poppins&family=Prompt&family=Roboto:wght@900&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Fragment+Mono&display=swap");
 
     * {
         font-size: 1.2rem;
@@ -334,10 +376,6 @@
         cursor: pointer;
         transition: all 0.3s ease-in-out;
         text-align: right;
-    }
-
-    .disabled {
-        background-color: red;
     }
 
     .shopitemalt {
@@ -404,7 +442,7 @@
     }
 
     .info {
-        font-family: 'Fragment Mono', monospace;
+        font-family: "Fragment Mono", monospace;
     }
 
     .counters {
@@ -419,7 +457,6 @@
     .counters .counter {
         position: absolute;
         width: 200px;
-        height: 200px;
         top: 20%;
     }
 
@@ -481,7 +518,7 @@
         border-radius: 5px;
         background-color: transparent;
         color: white;
-        font-family: 'Fragment Mono', monospace;
+        font-family: "Fragment Mono", monospace;
         border-top: none;
         border-right: solid 3px #ffffff10;
         border-left: solid 3px #ffffff10;
@@ -520,6 +557,113 @@
         100% {
             transform: scale(1.5);
             opacity: 0%;
+        }
+    }
+
+    #gadgetbutton {
+        display: none;
+    }
+
+    #upgradebutton {
+        display: none;
+    }
+
+    @media (max-width: 750px) {
+        * {
+            font-size: 14px;
+        }
+
+        .container {
+            overflow: hidden;
+            width: 100vw;
+            position: relative;
+        }
+
+        .counters {
+            transform: translateY(50px);
+        }
+
+        .shop {
+            left: -100%;
+            position: absolute;
+            background-color: #000;
+            z-index: 3;
+            top: 100px;
+            bottom: 100px;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .shop2 {
+            right: 100%;
+            position: absolute;
+            background-color: #000;
+            z-index: 3;
+            top: 100px;
+            bottom: 100px;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .footer {
+            z-index: 4;
+        }
+
+        .information,
+        .footer {
+            margin: 1rem 0rem;
+        }
+
+        .information {
+            padding-top: 1rem;
+        }
+
+        .shop,
+        .stage,
+        .shop2 {
+            flex: 100;
+            flex-direction: column;
+        }
+
+        .stage {
+            flex-direction: column;
+        }
+
+        #gadgetbutton {
+            display: block;
+        }
+
+        #upgradebutton {
+            display: block;
+        }
+
+        .slide-in {
+            left: 0;
+        }
+
+        .slide-out {
+            left: -100%;
+        }
+
+        .slide-in-r {
+            right: 0;
+            overflow: hidden;
+        }
+
+        .slide-out-r {
+            right: -100%;
+            overflow: hidden;
+        }
+
+        .shop.slide-in,
+        .shop.slide-out,
+        .shop2.slide-in-r,
+        .shop2.slide-out-r {
+            transition: all 0.3s ease-in-out;
+        }
+
+        #savetext {
+            transform: translateY(-5rem);
         }
     }
 </style>
