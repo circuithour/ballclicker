@@ -37,10 +37,10 @@
         abt * 4 +
         eabt * 8 +
         bte * 32 +
-        btg * 128 +
+        btg * 128 * 2 +
         cbp * 128 * 2 +
         nbt * 256 * 2 +
-        gp * 512 * 2;
+        gp * 256 ** 2;
 
     function saveGame() {
         saveText = true;
@@ -451,7 +451,7 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = upgradeHand(500000, mh, 1024);
+                const result = upgradeHand(500000, mh, 3024);
                 mh = result.upgrade;
                 count = result.count;
             }}
@@ -477,7 +477,7 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = upgradeHand(2000000, ua, 5016);
+                const result = upgradeHand(2000000, ua, 7016);
                 ua = result.upgrade;
                 count = result.count;
             }}
@@ -485,7 +485,7 @@
         >
             <span>
                 <p
-                    class={count < 500000 && !ua
+                    class={count < 2000000 && !ua
                         ? "unaffordable"
                         : "affordable"}
                 >
