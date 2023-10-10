@@ -33,13 +33,13 @@
     let upgradeDrawer = false;
 
     $: rate =
-        abt * 8 +
-        eabt * 15 +
-        bte * 20 +
-        btg * 50 +
-        cbp * 100 +
-        nbt * 10000 +
-        gp * 100000;
+        abt * 4 +
+        eabt * 8 +
+        bte * 16 +
+        btg * 64 +
+        cbp * 128 +
+        nbt * 256 +
+        gp * 512;
 
     function saveGame() {
         saveText = true;
@@ -179,15 +179,15 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = buyGadget(50, abt);
+                const result = buyGadget(500, abt);
                 abt = result.gadget;
                 count = result.count;
             }}
         >
             <p>Automatic Ball Toucher</p>
             <span>
-                <p class={count < 50 ? "unaffordable" : "affordable"}>
-                    50 Balls
+                <p class={count < 500 ? "unaffordable" : "affordable"}>
+                    500 Balls
                 </p>
                 <p>x{abt}</p>
             </span>
@@ -197,15 +197,15 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = buyGadget(300, eabt);
+                const result = buyGadget(1000, eabt);
                 eabt = result.gadget;
                 count = result.count;
             }}
         >
             <p>Enhanced Automatic Ball Toucher</p>
             <span>
-                <p class={count < 300 ? "unaffordable" : "affordable"}>
-                    300 Balls
+                <p class={count < 1000 ? "unaffordable" : "affordable"}>
+                    1000 Balls
                 </p>
                 <p>x{eabt}</p>
             </span>
@@ -215,15 +215,15 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = buyGadget(500, bte);
+                const result = buyGadget(10000, bte);
                 bte = result.gadget;
                 count = result.count;
             }}
         >
             <p>Ball Touching Employee</p>
             <span>
-                <p class={count < 500 ? "unaffordable" : "affordable"}>
-                    500 Balls
+                <p class={count < 10000 ? "unaffordable" : "affordable"}>
+                    10000 Balls
                 </p>
                 <p>x{bte}</p>
             </span>
@@ -233,15 +233,15 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = buyGadget(1000, btg);
+                const result = buyGadget(100000, btg);
                 btg = result.gadget;
                 count = result.count;
             }}
         >
             <p>Ball Touching Goblin</p>
             <span>
-                <p class={count < 1000 ? "unaffordable" : "affordable"}>
-                    1000 Balls
+                <p class={count < 100000 ? "unaffordable" : "affordable"}>
+                    100000 Balls
                 </p>
                 <p>x{btg}</p>
             </span>
@@ -251,15 +251,15 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = buyGadget(10000, cbp);
+                const result = buyGadget(1000000, cbp);
                 cbp = result.gadget;
                 count = result.count;
             }}
         >
             <p>Counterfeit Ball Printer</p>
             <span>
-                <p class={count < 10000 ? "unaffordable" : "affordable"}>
-                    10000 Balls
+                <p class={count < 1000000 ? "unaffordable" : "affordable"}>
+                    1000000 Balls
                 </p>
                 <p>x{cbp}</p>
             </span>
@@ -269,15 +269,15 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = buyGadget(100000, nbt);
+                const result = buyGadget(10000000, nbt);
                 nbt = result.gadget;
                 count = result.count;
             }}
         >
             <p>Neutron Ball Tech</p>
             <span>
-                <p class={count < 100000 ? "unaffordable" : "affordable"}>
-                    100000 Balls
+                <p class={count < 10000000 ? "unaffordable" : "affordable"}>
+                    10000000 Balls
                 </p>
                 <p>x{nbt}</p>
             </span>
@@ -287,15 +287,15 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = buyGadget(1000000, gp);
+                const result = buyGadget(100000000, gp);
                 gp = result.gadget;
                 count = result.count;
             }}
         >
             <p>Gamma Particles</p>
             <span>
-                <p class={count < 1000000 ? "unaffordable" : "affordable"}>
-                    1000000 Balls
+                <p class={count < 100000000 ? "unaffordable" : "affordable"}>
+                    100000000 Balls
                 </p>
                 <p>x{gp}</p>
             </span>
@@ -338,15 +338,15 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = upgradeHand(250, ph, 1);
+                const result = upgradeHand(100, ph, 4);
                 ph = result.upgrade;
                 count = result.count;
             }}
             class={ph ? "die" : "shopitemalt"}
         >
             <span>
-                <p class={count < 250 && !ph ? "unaffordable" : "affordable"}>
-                    250 Balls
+                <p class={count < 100 && !ph ? "unaffordable" : "affordable"}>
+                    100 Balls
                 </p>
                 {#if ph}
                     <p class="affordable">✓</p>
@@ -360,7 +360,7 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = upgradeHand(1000, tph, 6);
+                const result = upgradeHand(1000, tph, 16);
                 tph = result.upgrade;
                 count = result.count;
             }}
@@ -382,7 +382,7 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = upgradeHand(5000, ta, 8);
+                const result = upgradeHand(5000, ta, 24);
                 ta = result.upgrade;
                 count = result.count;
             }}
@@ -404,7 +404,7 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = upgradeHand(100000, mf, 24);
+                const result = upgradeHand(100000, mf, 32);
                 mf = result.upgrade;
                 count = result.count;
             }}
@@ -430,7 +430,7 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = upgradeHand(1000000, mh, 64);
+                const result = upgradeHand(1000000, mh, 128);
                 mh = result.upgrade;
                 count = result.count;
             }}
