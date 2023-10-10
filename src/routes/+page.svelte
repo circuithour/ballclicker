@@ -855,5 +855,10 @@
         .shopitemalt {
             touch-action: manipulation;
         }
+
+        #button {
+            width: 148px;
+            height: 148px;
+        }
     }
 </style>
