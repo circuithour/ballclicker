@@ -20,15 +20,26 @@
     let bte = 0;
     let btg = 0;
     let cbp = 0;
+    let nbt = 0;
+    let gp = 0;
     let showclickcount = false;
     let saveText = false;
     let ph = false;
     let tph = false;
     let ta = false;
+    let mf = false;
+    let mh = false;
     let gadgetDrawer = false;
     let upgradeDrawer = false;
 
-    $: rate = abt * 8 + eabt * 15 + bte * 20 + btg * 50 + cbp * 100;
+    $: rate =
+        abt * 8 +
+        eabt * 15 +
+        bte * 20 +
+        btg * 50 +
+        cbp * 100 +
+        nbt * 10000 +
+        gp * 100000;
 
     function saveGame() {
         saveText = true;
@@ -40,9 +51,13 @@
             bte,
             btg,
             cbp,
+            nbt,
+            gp,
             ph,
             tph,
             ta,
+            mf,
+            mh,
         };
         localStorage.setItem("gameData", JSON.stringify(gameData));
         setTimeout(() => {
@@ -61,9 +76,13 @@
             bte = gameData.bte;
             btg = gameData.btg;
             cbp = gameData.cbp;
+            nbt = gameData.nbt;
+            gp = gameData.gp;
             ph = gameData.ph;
             tph = gameData.tph;
             ta = gameData.ta;
+            mf = gameData.mf;
+            mh = gameData.mh;
         }
     }
 
@@ -77,9 +96,13 @@
         bte = 0;
         btg = 0;
         cbp = 0;
+        nbt = 0;
+        gp = 0;
         ph = false;
         tph = false;
         ta = false;
+        mf = false;
+        mh = false;
     }
 
     let isMobileView = false;
@@ -241,6 +264,42 @@
                 <p>x{cbp}</p>
             </span>
         </div>
+        <div
+            class="shopitem"
+            role="button"
+            tabindex=""
+            on:click={() => {
+                const result = buyGadget(100000, nbt);
+                nbt = result.gadget;
+                count = result.count;
+            }}
+        >
+            <p>Neutron Ball Tech</p>
+            <span>
+                <p class={count < 100000 ? "unaffordable" : "affordable"}>
+                    100000 Balls
+                </p>
+                <p>x{nbt}</p>
+            </span>
+        </div>
+        <div
+            class="shopitem"
+            role="button"
+            tabindex=""
+            on:click={() => {
+                const result = buyGadget(1000000, gp);
+                gp = result.gadget;
+                count = result.count;
+            }}
+        >
+            <p>Gamma Particles</p>
+            <span>
+                <p class={count < 1000000 ? "unaffordable" : "affordable"}>
+                    1000000 Balls
+                </p>
+                <p>x{gp}</p>
+            </span>
+        </div>
     </div>
     <div class="stage">
         <div class="information">
@@ -340,6 +399,58 @@
                 {/if}
             </span>
             <p>Third Arm</p>
+        </div>
+        <div
+            role="button"
+            tabindex=""
+            on:click={() => {
+                const result = upgradeHand(100000, mf, 24);
+                mf = result.upgrade;
+                count = result.count;
+            }}
+            class={mf ? "die" : "shopitemalt"}
+        >
+            <span>
+                <p
+                    class={count < 100000 && !mf
+                        ? "unaffordable"
+                        : "affordable"}
+                >
+                    100000 Balls
+                </p>
+                {#if mf}
+                    <p class="affordable">✓</p>
+                {:else}
+                    <p class="unaffordable">✗</p>
+                {/if}
+            </span>
+            <p>Magic Fingers</p>
+        </div>
+        <div
+            role="button"
+            tabindex=""
+            on:click={() => {
+                const result = upgradeHand(1000000, mh, 64);
+                mh = result.upgrade;
+                count = result.count;
+            }}
+            class={mh ? "die" : "shopitemalt"}
+        >
+            <span>
+                <p
+                    class={count < 1000000 && !mh
+                        ? "unaffordable"
+                        : "affordable"}
+                >
+                    1000000 Balls
+                </p>
+                {#if mh}
+                    <p class="affordable">✓</p>
+                {:else}
+                    <p class="unaffordable">✗</p>
+                {/if}
+            </span>
+            <p>Magic Hands</p>
         </div>
     </div>
 </div>
@@ -646,12 +757,10 @@
 
         .slide-in-r {
             right: 0;
-            overflow: hidden;
         }
 
         .slide-out-r {
             right: -100%;
-            overflow: hidden;
         }
 
         .shop.slide-in,
