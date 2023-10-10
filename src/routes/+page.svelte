@@ -29,17 +29,18 @@
     let ta = false;
     let mf = false;
     let mh = false;
+    let ua = false;
     let gadgetDrawer = false;
     let upgradeDrawer = false;
 
     $: rate =
         abt * 4 +
         eabt * 8 +
-        bte * 16 +
-        btg * 64 +
-        cbp * 128 +
-        nbt * 256 +
-        gp * 512;
+        bte * 32 +
+        btg * 128 +
+        cbp * 128 * 2 +
+        nbt * 256 * 2 +
+        gp * 512 * 2;
 
     function saveGame() {
         saveText = true;
@@ -58,6 +59,7 @@
             ta,
             mf,
             mh,
+            ua,
         };
         localStorage.setItem("gameData", JSON.stringify(gameData));
         setTimeout(() => {
@@ -83,6 +85,7 @@
             ta = gameData.ta;
             mf = gameData.mf;
             mh = gameData.mh;
+            ua = gameData.ua; // Ultra Hand
         }
     }
 
@@ -103,6 +106,7 @@
         ta = false;
         mf = false;
         mh = false;
+        ua = false;
     }
 
     let isMobileView = false;
@@ -128,6 +132,11 @@
         if (gadgetDrawer === true) {
             gadgetDrawer = !gadgetDrawer;
         }
+    }
+
+    function closeDrawers() {
+        upgradeDrawer = false;
+        gadgetDrawer = false;
     }
 
     function addBall() {
@@ -174,6 +183,12 @@
                 : 'slide-out'
             : ''}"
     >
+        <div
+            class={isMobileView && gadgetDrawer ? "backdrop" : "megadie"}
+            on:click={closeDrawers}
+            role="button"
+            tabindex=""
+        />
         <div
             class="shopitem"
             role="button"
@@ -251,15 +266,15 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = buyGadget(1000000, cbp);
+                const result = buyGadget(500000, cbp);
                 cbp = result.gadget;
                 count = result.count;
             }}
         >
             <p>Counterfeit Ball Printer</p>
             <span>
-                <p class={count < 1000000 ? "unaffordable" : "affordable"}>
-                    1000000 Balls
+                <p class={count < 500000 ? "unaffordable" : "affordable"}>
+                    500000 Balls
                 </p>
                 <p>x{cbp}</p>
             </span>
@@ -269,15 +284,15 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = buyGadget(10000000, nbt);
+                const result = buyGadget(1000000, nbt);
                 nbt = result.gadget;
                 count = result.count;
             }}
         >
             <p>Neutron Ball Tech</p>
             <span>
-                <p class={count < 10000000 ? "unaffordable" : "affordable"}>
-                    10000000 Balls
+                <p class={count < 1000000 ? "unaffordable" : "affordable"}>
+                    1000000 Balls
                 </p>
                 <p>x{nbt}</p>
             </span>
@@ -287,15 +302,15 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = buyGadget(100000000, gp);
+                const result = buyGadget(5000000, gp);
                 gp = result.gadget;
                 count = result.count;
             }}
         >
             <p>Gamma Particles</p>
             <span>
-                <p class={count < 100000000 ? "unaffordable" : "affordable"}>
-                    100000000 Balls
+                <p class={count < 5000000 ? "unaffordable" : "affordable"}>
+                    5000000 Balls
                 </p>
                 <p>x{gp}</p>
             </span>
@@ -334,6 +349,12 @@
                 : 'slide-out-r'
             : ''}"
     >
+        <div
+            class={isMobileView && upgradeDrawer ? "backdropalt" : "megadie"}
+            on:click={closeDrawers}
+            role="button"
+            tabindex=""
+        />
         <div
             role="button"
             tabindex=""
@@ -404,7 +425,7 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = upgradeHand(100000, mf, 32);
+                const result = upgradeHand(100000, mf, 128);
                 mf = result.upgrade;
                 count = result.count;
             }}
@@ -430,7 +451,7 @@
             role="button"
             tabindex=""
             on:click={() => {
-                const result = upgradeHand(1000000, mh, 128);
+                const result = upgradeHand(500000, mh, 1024);
                 mh = result.upgrade;
                 count = result.count;
             }}
@@ -438,11 +459,11 @@
         >
             <span>
                 <p
-                    class={count < 1000000 && !mh
+                    class={count < 500000 && !mh
                         ? "unaffordable"
                         : "affordable"}
                 >
-                    1000000 Balls
+                    500000 Balls
                 </p>
                 {#if mh}
                     <p class="affordable">✓</p>
@@ -451,6 +472,32 @@
                 {/if}
             </span>
             <p>Magic Hands</p>
+        </div>
+        <div
+            role="button"
+            tabindex=""
+            on:click={() => {
+                const result = upgradeHand(2000000, ua, 5016);
+                ua = result.upgrade;
+                count = result.count;
+            }}
+            class={ua ? "die" : "shopitemalt"}
+        >
+            <span>
+                <p
+                    class={count < 500000 && !ua
+                        ? "unaffordable"
+                        : "affordable"}
+                >
+                    2000000 Balls
+                </p>
+                {#if ua}
+                    <p class="affordable">✓</p>
+                {:else}
+                    <p class="unaffordable">✗</p>
+                {/if}
+            </span>
+            <p>Ultra Hand</p>
         </div>
     </div>
 </div>
@@ -514,6 +561,10 @@
         text-align: left;
     }
 
+    .megadie {
+        display: none;
+    }
+
     .shopitem:hover,
     .shopitemalt:hover {
         background-color: #ffffff10;
@@ -572,16 +623,16 @@
     }
 
     #button {
-        background-color: hsl(187, 59%, 46%);
+        background-color: hsl(290, 61%, 29%);
         border-radius: 50%;
-        width: 128px;
-        height: 128px;
+        width: 200px;
+        height: 200px;
         cursor: pointer;
         transition: background-color 0.1s ease-in-out;
     }
 
     #button:hover {
-        background-color: hsl(187, 60%, 56%);
+        background-color: hsl(290, 61%, 39%);
         transition: background-color 0.1s ease-in-out;
     }
 
@@ -733,6 +784,31 @@
         .shop2 {
             flex: 100;
             flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .backdrop {
+            background-color: hsla(0, 0%, 0%, 0);
+            right: -299px;
+            position: fixed;
+            z-index: 999999;
+            top: 116px;
+            bottom: 100px;
+            max-height: 74vh;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .backdropalt {
+            background-color: hsla(0, 0%, 0%, 0);
+            left: -201px;
+            position: fixed;
+            z-index: 999999;
+            top: 116px;
+            bottom: 100px;
+            max-height: 74vh;
+            width: 100%;
+            overflow-x: hidden;
         }
 
         .stage {
@@ -767,14 +843,16 @@
         .shop.slide-out,
         .shop2.slide-in-r,
         .shop2.slide-out-r {
-            transition: all 0.3s ease-in-out;
+            transition: all 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
         }
 
         #savetext {
             transform: translateY(-5rem);
         }
 
-        #button {
+        #button,
+        .shopitem,
+        .shopitemalt {
             touch-action: manipulation;
         }
     }
